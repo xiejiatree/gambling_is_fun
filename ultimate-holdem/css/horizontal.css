@@ -76,3 +76,16 @@ button.btn-danger {
     background-color: darkred;
     color: white;
 }
+
+/* Odds Widget Styling */
+#oddsWidget {
+    background-color: #004400;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    max-width: 200px; /* Limit widget width */
+    margin-left: auto; /* Ensure alignment to the right */
+}

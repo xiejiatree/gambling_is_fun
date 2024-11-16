@@ -29,39 +29,41 @@
             <div class="col-md-12 my-2  animated fadeInDown" alt="Online Texas Hold'em">
                 <button class="btn btn-success btn-block btn-lg p-2" title="Deal" onClick="javascript:deal()">Deal
                     $10</button>
-
             </div>
 
             <div class="col-md-12">
-                <div class="alert alert-info" role="alert" id="notification">
-                    <div class="row">
-                        <!-- Could use some stylesheets here -->
+                <div class="alert alert-info d-flex align-items-center justify-content-between" role="alert" id="notification">
+                    <div class="row w-100">
+                        <!-- Balance -->
                         <div class="col-6">
                             <h3>Balance: $<span id="playerMoney"></span></h3>
                         </div>
+            
+                        <!-- Bet Target -->
                         <div class="col-6 d-flex justify-content-center">
-                            <h3 id="betTarget" alt="Texas Hold'em Poker Game">TEXAS HOLDEM <span
-                                    class="text-danger">(STATUS: BETA TESTING)</span></h3>
-
-                            <!-- <select class="form-control hide" id="howManyopponents"
-                                onClick="javascriptsetOpponentNumber()">
-                                <option value="1">1 opponent</option>
-                                <option value="2">2 opponents</option>
-                                <option value="3" selected>3 opponents</option>
-                            </select> -->
-
+                            <h3 id="betTarget" alt="Texas Hold'em Poker Game">
+                                TEXAS HOLDEM <span class="text-danger">(STATUS: BETA TESTING)</span>
+                            </h3>
                         </div>
+            
+                        <!-- Status Message -->
                         <div class="col-md-12 hide" id="status">
-
                             <h3 id="message"></h3>
-
                         </div>
-
-
+                    </div>
+            
+                    <!-- Odds Widget -->
+                    <div id="oddsWidget" class="ml-auto">
+                        <h3>Odds of Winning</h3>
+                        <h4>  (Monte Carlo)</h4>
+                        <p>Player 1: </p>
+                        <p>Player 2: 30%</p>
+                        <p>Player 3: 15%</p>
+                        <p>Player 4: 10%</p>
                     </div>
                 </div>
-
             </div>
+            
 
             <div class="col-md-12">
                 <div id="communityCards"></div>
