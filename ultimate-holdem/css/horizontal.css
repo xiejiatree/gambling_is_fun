@@ -1,0 +1,78 @@
+/* Set the background to green */
+body {
+    background-color: green;
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+/* Container adjustments */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Community cards above the players */
+#communityCards {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* Players arranged horizontally */
+.playersRow {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+/* Individual player containers */
+.playersRow .col-md-3 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Shared card styles (applies to all cards: community, player, and AI) */
+.card {
+    width: 60px; /* Consistent width */
+    height: 90px; /* Consistent height */
+    border-radius: 5px;
+    background-color: white;
+    border: 1px solid #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Specific for hidden cards (e.g., AI cards) */
+.hiddenDealerCard {
+    background-color: red; /* Different color for hidden cards */
+    border: 1px solid black;
+}
+
+/* Text alignment */
+h3, p {
+    text-align: center;
+}
+
+/* Buttons styling */
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button.btn-info {
+    background-color: blue;
+    color: white;
+}
+
+button.btn-danger {
+    background-color: darkred;
+    color: white;
+}
