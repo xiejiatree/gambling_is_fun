@@ -1,0 +1,53 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Hold'em Simulator</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Ultimate Hold'em Simulator</h1>
+        <nav>
+            <!-- NavLinks-->
+        </nav>
+    </header>
+
+    <main id="game-container">
+        <!-- Game UI Components -->
+        <div id="controls">
+            <button id="start-game">Start Game</button>
+            <!-- Betting controls: Check, Bet, Raise -->
+        </div>
+        <div id="player-hand" class="hand">
+            <h2>Your Hand</h2>
+            <div class="cards">
+                <!-- Player's Cards -->
+            </div>
+        </div>
+        <div id="dealer-hand" class="hand">
+            <h2>Dealer's Hand</h2>
+            <div class="cards">
+                <!-- Dealer's Cards -->
+            </div>
+        </div>
+        <div id="pot">
+            <p>Pot: $<span id="pot-amount">0</span></p>
+        </div>
+        <div id="messages">
+            <!-- Game Messages and Status -->
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Ultimate Hold'em Simulator</p>
+    </footer>
+
+    <script src="js/utils.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
