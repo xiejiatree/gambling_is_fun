@@ -11,7 +11,7 @@ const cardHierarchy = ["two", "three", "four", "five", "six", "seven", "eight", 
 const suitArr = ["diamonds", "hearts", "clubs", "spades"];
 const playersDetails = ["playerHandDetails", "playerTwoHandDetails", "playerThreeHandDetails", "playerFourHandDetails"];
 const playerIds = ["playerCards", "playerTwoCards", "playerThreeCards", "playerFourCards"];
-const gameStepHierarchy = ["zeroPlaceholder", "pre flop", "flop", "turn", "river"];
+const gameStepHierarchy = ["zeroPlaceholder", "Pre flop", "Flop", "Turn", "River"];
 let usedCardsArr = [];
 let communityCardsHTML = "";
 /*looking for pairs*/

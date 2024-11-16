@@ -14,10 +14,37 @@ body {
 
 /* Community cards above the players */
 #communityCards {
+    position: absolute;
+    left: 25%; 
+    right: 25%;
     display: flex;
-    justify-content: center;
+    justify-content: center; 
+    margin: 0 auto;
     gap: 10px;
     margin-bottom: 20px;
+    /* border: 1px solid blue; Temporary border for visual debugging */
+}
+
+/* Odds Widget Styling */
+#oddsWidget {
+    background-color: #004400;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    max-width: 200px; /* Limit widget width */
+    margin-left: auto; /* Ensure alignment to the right */
+    /* border: 4px solid red; Temporary border for visual debugging */
+}
+
+.communityCards-and-odds-Widget {
+    display: flex;
+    justify-content: space-between;
+    align-items : center; 
+    margin-bottom: 20px;
+    gap: 20px;
 }
 
 /* Players arranged horizontally */
@@ -77,15 +104,19 @@ button.btn-danger {
     color: white;
 }
 
-/* Odds Widget Styling */
-#oddsWidget {
-    background-color: #004400;
-    color: white;
-    padding: 15px;
-    border-radius: 5px;
-    font-size: 14px;
-    text-align: center;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    max-width: 200px; /* Limit widget width */
-    margin-left: auto; /* Ensure alignment to the right */
+button.btn-deal {
+    background-color: yellow;
+    color: black;
 }
+
+/* Center the button group container */
+.button-group-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    margin: 20px 0; /* Add spacing above and below if necessary */
+    text-align: center; /* Ensure proper text alignment */
+}
+
+
+
