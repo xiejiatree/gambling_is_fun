@@ -1,6 +1,6 @@
 # Javascript hold'em, friends not required. 
 
-.NET link: [PLAY HERE](victorious-water-0d7753d0f.5.azurestaticapps.net)
+PLAY HERE .NET link: https://victorious-water-0d7753d0f.5.azurestaticapps.net/
 
 Try out custom domain: https://poker-is.study/
 
