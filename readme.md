@@ -14,7 +14,7 @@ Interested in game theory? [https://saylordotorg.github.io/text_introduction-to-
 
 Monte Carlo Simulation: [https://en.wikipedia.org/wiki/Monte_Carlo_method#Simple_Monte_Carlo]
 
-KQ48 Heuristic decreases \[house] edge: [https://www.vegashowto.com/crazy-4-poker]
+KQ48 Heuristic decreases house edge: [https://www.vegashowto.com/crazy-4-poker]
 
 Statistics based on: [https://en.wikipedia.org/wiki/Texas_hold_%27em_starting_hands#Statistics_based_on_real_online_play]
 
