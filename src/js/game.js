@@ -53,8 +53,8 @@ let bet3 = Math.floor(Math.random() * (maxBet[2] - maxBet[1] + 1) + maxBet[1]);
 let monetaryVal = [null, 10, bet1, bet2, bet3];
 
 /* MATH SECTION: */
-let oddsOfWinning = 25;
-let oddsOfWinning2 = 25; 
+let oddsOfWinning = "25.00%";
+let oddsOfWinning2 = "25.00%"; 
 document.getElementById("odds_of_winning").textContent = oddsOfWinning;
 document.getElementById("odds_of_winning2").textContent = oddsOfWinning;
 
@@ -307,11 +307,27 @@ function KQ48(iteration, gameStep) {
 
     // Ensure oddsOfWinning is within [0,1]
     oddsOfWinning = Math.max(0, Math.min(1, oddsOfWinning));
+    let oddsOfWinning2 = monteCarlo(oddsOfWinning);
 
     // Update the DOM elements
-    document.getElementById("odds_of_winning").textContent = (oddsOfWinning * 100).toFixed(2) + "%";
+    document.getElementById("odds_of_winning2").textContent = (oddsOfWinning * 100).toFixed(2) + "%";
+    document.getElementById("odds_of_winning").textContent = (oddsOfWinning2 ).toFixed(2) + "%";
 }
 
+function monteCarlo(oddsOfWinning){
+    console.log("monteCarlo was called.");
+    const numSimulations = 50;
+    let winCount = 0; 
+    for( let i = 0; i < numSimulations; i++) {
+        const randomValue = Math.random();
+        if(randomValue < oddsOfWinning){
+            winCount += 1; 
+        }
+    }
+
+    const simulatedWR = (winCount / numSimulations) * 100; 
+    return simulatedWR; 
+}
 
 
 function evaluateHand(iteration, gameStep) {
