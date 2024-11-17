@@ -1,6 +1,7 @@
 # Javascript hold'em, friends not required. 
 
-Vanilla Javascript, HTML, CSS stylesheets.
+.NET link: [PLAY HERE](victorious-water-0d7753d0f.5.azurestaticapps.net)
+Try out custom domain: https://poker-is.study/
 
 Functionality: [https://github.com/aaronrs2002/poker]
 
@@ -15,6 +16,8 @@ Monte Carlo Simulation: [https://en.wikipedia.org/wiki/Monte_Carlo_method#Simple
 KQ48 Heuristic decreases \[house] edge: [https://www.vegashowto.com/crazy-4-poker]
 
 Statistics based on: [https://en.wikipedia.org/wiki/Texas_hold_%27em_starting_hands#Statistics_based_on_real_online_play]
+
+Vanilla Javascript, HTML, CSS stylesheets.
 
 
 
