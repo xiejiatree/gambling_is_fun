@@ -37,6 +37,8 @@ const messageElement = document.getElementById("message");
 let communityCards = [];
 let thePot = 0;
 let playerMoney = 500;/*DOES NOT RESET AT DEAL*/
+
+
 if (localStorage.getItem("balance") && Number(localStorage.getItem("balance"))) {
     playerMoney = Number(localStorage.getItem("balance"));
 }
@@ -49,6 +51,14 @@ let bet1 = Math.floor(Math.random() * (maxBet[0] - 1 + 1) + 10);
 let bet2 = Math.floor(Math.random() * (maxBet[1] - maxBet[0] + 1) + maxBet[0]);
 let bet3 = Math.floor(Math.random() * (maxBet[2] - maxBet[1] + 1) + maxBet[1]);
 let monetaryVal = [null, 10, bet1, bet2, bet3];
+
+/* MATH SECTION: */
+let oddsOfWinning = 25;
+let oddsOfWinning2 = 25; 
+document.getElementById("odds_of_winning").textContent = oddsOfWinning;
+document.getElementById("odds_of_winning2").textContent = oddsOfWinning;
+
+
 
 function setPlayerMoney(winLoseBet) {
     document.getElementById("betTarget").innerHTML = "Bet $" + bet;
@@ -191,6 +201,118 @@ function removeActivePlyr(plyrID) {
         youWin("default");
     }
 }
+
+function KQ48(iteration, gameStep) {
+    let stepPlayed = false;
+    countingIterations = iteration;
+    let cardsInvolved = "";
+    let cardIndexes = [];
+    let cardsArr = [playersHands[iteration][0], playersHands[iteration][1]];
+
+    // Assemble cardsArr based on gameStep
+    if (gameStep >= 2 && communityCards.length >= 3) {
+        cardsArr = [...cardsArr, communityCards[0], communityCards[1], communityCards[2]];
+    }
+    if (gameStep >= 3 && communityCards.length >= 4) {
+        cardsArr = [...cardsArr, communityCards[3]];
+    }
+    if (gameStep >= 4 && communityCards.length >= 5) {
+        cardsArr = [...cardsArr, communityCards[4]];
+    }
+
+    let heuristicVal = 25; // Initial odds
+
+    // Count high-order community cards
+    let highCommunityCardsCount = 0;
+    const highCards = ["ten", "jack", "queen", "king", "ace"];
+
+    for (let i = 0; i < communityCards.length; i++) {
+        if (highCards.includes(communityCards[i].value)) {
+            highCommunityCardsCount += 1;
+        }
+    }
+
+    // Adjust heuristicVal based on high-order community cards
+    if (highCommunityCardsCount >= 3) {
+        heuristicVal += 10; // Boost odds if 3 or more high cards are on the board
+    } else if (highCommunityCardsCount === 2) {
+        heuristicVal += 5; // Slight boost if 2 high cards are present
+    }
+
+    // Iterate through all cards in cardsArr
+    for (let i = 0; i < cardsArr.length; i++) {
+        const cardValue = cardsArr[i].value.toLowerCase();
+
+        // Correct condition to check if card exists in cardHierarchy
+        const cardIndex = cardHierarchy.indexOf(cardValue);
+        if (cardIndex !== -1) {
+            cardIndexes.push(cardIndex);
+        }
+
+        // Representation for ace in straights
+        if (cardValue === "ace") {
+            cardIndexes.push(-1); // For straight detection (ace as low)
+        }
+
+        // Adjust heuristic value based on card value
+        switch (cardValue) {
+            case "two":
+                heuristicVal -= 10;
+                break;
+            case "three":
+                heuristicVal -= 9;
+                break;
+            case "five":
+                heuristicVal -= 8;
+                break;
+            case "six":
+                heuristicVal -= 7;
+                break;
+            case "seven":
+                heuristicVal -= 6;
+                break;
+            case "nine":
+                heuristicVal += 11;
+                break;
+            case "ten":
+                heuristicVal += 12;
+                break;
+            case "jack":
+                heuristicVal += 13;
+                break;
+            case "queen":
+                heuristicVal += 14;
+                break;
+            case "king":
+                heuristicVal += 15;
+                break;
+            case "ace":
+                heuristicVal += 20;
+                break;
+            // Cases "four" and "eight" do not change heuristicVal
+        }
+    }
+
+    // Additional Boost if high cards are present in player's hand
+    const playerCards = playersHands[iteration];
+    playerCards.forEach(card => {
+        if (highCards.includes(card.value.toLowerCase())) {
+            heuristicVal += 5; // Further boost for high cards in player's hand
+        }
+    });
+
+    // Normalize heuristicVal to get oddsOfWinning
+    // Assuming heuristicVal ranges roughly between 0-100 for normalization
+    let oddsOfWinning = heuristicVal / 100;
+
+    // Ensure oddsOfWinning is within [0,1]
+    oddsOfWinning = Math.max(0, Math.min(1, oddsOfWinning));
+
+    // Update the DOM elements
+    document.getElementById("odds_of_winning").textContent = (oddsOfWinning * 100).toFixed(2) + "%";
+}
+
+
 
 function evaluateHand(iteration, gameStep) {
     let stepPlayed = false;
@@ -598,10 +720,12 @@ function evaluateHand(iteration, gameStep) {
             if (resultList[iteration] >= 1 || connectedTwo === true || highCardCount > 0 || firstRoundSuited === true || valueArr[12] > 0) {
                 document.querySelector("[data-player='" + iteration + "']").innerHTML = plyr + "Player " + (iteration + 1) + ": bets $" + monetaryVal[gameStep + 1];
                 document.querySelector("[data-player='" + iteration + "']").dataset.status = "betting";
+                KQ48(iteration, gameStep);
             } 
             else {
                 document.querySelector("[data-player='" + iteration + "']").innerHTML = plyr + "Player " + (iteration + 1) + ": checks.";
                 document.querySelector("[data-player='" + iteration + "']").dataset.status = "checking";
+               KQ48(iteration, gameStep);
             }
             if (iteration == lastIteration) {
                 if (document.querySelector("[data-status='betting']") !== null) {
@@ -610,22 +734,26 @@ function evaluateHand(iteration, gameStep) {
                         removeActivePlyr(whichPlayer);
                         e.innerHTML = plyr + " Player " + (whichPlayer + 1) + ": folded.";
                         e.dataset.status = "folded";
+                        KQ48(iteration, gameStep);
                     });
                     document.querySelector("[data-round='max']").classList.remove("hide");
                     document.querySelector("[data-round='match']").classList.remove("hide");
                     document.querySelector("[data-round='raise']").classList.remove("hide");
                     document.querySelector("[data-round='check']").classList.add("hide");
+                    KQ48(iteration, gameStep);
                 } else {
                     document.querySelector("[data-round='max']").classList.add("hide");
                     document.querySelector("[data-round='match']").classList.add("hide");
                     document.getElementById("foldBt").classList.add("hide");
                     document.querySelector("[data-round='raise']").classList.add("hide");
                     document.querySelector("[data-round='check']").classList.remove("hide");
+                    KQ48(iteration, gameStep);
                 }
                 document.querySelector("[data-round='max']").disabled = false;
                 document.querySelector("[data-round='match']").disabled = false;
                 document.querySelector("[data-round='check']").disabled = false;
                 stepPlayed = true;
+                KQ48(iteration, gameStep);
                 return false;
             }
         }
@@ -637,25 +765,31 @@ function evaluateHand(iteration, gameStep) {
                 if (connectedThree === true || highCardCount > 1 || firstRoundSuited === true || resultList[iteration] >= 1) {
                     document.querySelector("[data-player='" + iteration + "']").innerHTML = plyr + " Player " + (iteration + 1) + ": bets $" + monetaryVal[gameStep + 1];
                     document.querySelector("[data-player='" + iteration + "']").dataset.status = "betting";
+                    KQ48(iteration, gameStep);
                 } else {
                     document.querySelector("[data-player='" + iteration + "']").innerHTML = plyr + " Player " + (iteration + 1) + ": checks.";
                     document.querySelector("[data-player='" + iteration + "']").dataset.status = "checking";
+                    KQ48(iteration, gameStep);
                 }
             }
             if (gameStep === 3 && iteration !== 0) {
                 if (connectedThree === true || connectedFour > 1 || threeSuited === true || fourSuited === true || resultList[iteration] >= 1) {
                     document.querySelector("[data-player='" + iteration + "']").innerHTML = plyr + "Player " + (iteration + 1) + ": bets $" + monetaryVal[gameStep + 1];
                     document.querySelector("[data-player='" + iteration + "']").dataset.status = "betting";
+                    KQ48(iteration, gameStep);
                 } else {
                     document.querySelector("[data-player='" + iteration + "']").innerHTML = plyr + "Player " + (iteration + 1) + ": checks.";
                     document.querySelector("[data-player='" + iteration + "']").dataset.status = "checking";
+                    KQ48(iteration, gameStep);
                 }
                 /*START FOLD BASED ON MAX BET*/
                 if (maxBetHit === true && iteration !== 0) {
                     if (connectedThree === false && resultList[iteration] <= 2 && fourSuited === false) {
                         document.querySelector("[data-player='" + iteration + "']").innerHTML = plyr + " Player " + (iteration + 1) + ": checks.";
                         document.querySelector("[data-player='" + iteration + "']").dataset.status = "checking";
+                        KQ48(iteration, gameStep);
                     }
+                    
                 }
             }/*broke up conditionals to help the javascript process*/
             if (iteration === lastIteration && iteration !== 0) {
@@ -886,6 +1020,7 @@ function deal() {
         document.getElementById(playerIds[iteration]).innerHTML = playerCardsHTML;
         playersHands[iteration] = handObj;
         evaluateHand(iteration, 1);
+        KQ48(iteration, 1);
         return false;
     }
     for (let i = 0; i < 4; i++) {
