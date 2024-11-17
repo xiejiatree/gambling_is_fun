@@ -333,7 +333,7 @@ function monteCarlo(oddsOfWinning){
 function evaluateHand(iteration, gameStep) {
     let stepPlayed = false;
     document.getElementById("communityCardDetails").innerHTML = "<h3>The " + gameStepHierarchy[gameStep] + " - Pot: $" + thePot + "</h3>";
-    document.getElementById("raiseAmt").innerHTML = "$" + (monetaryVal[gameIncrement + 1] * 2);
+    document.querySelector("[data-round='raise']").innerHTML = "Raise $" + (monetaryVal[gameIncrement + 1] * 2);
     document.querySelector("[data-round='max']").innerHTML = "Max $" + (monetaryVal[gameIncrement + 1] * 3);
     countingIterations = iteration;
     let cardsInvolved = "";
@@ -767,6 +767,7 @@ function evaluateHand(iteration, gameStep) {
                 }
                 document.querySelector("[data-round='max']").disabled = false;
                 document.querySelector("[data-round='match']").disabled = false;
+                document.querySelector("[data-round='raise']").disabled = false;
                 document.querySelector("[data-round='check']").disabled = false;
                 stepPlayed = true;
                 KQ48(iteration, gameStep);
@@ -852,11 +853,18 @@ function evaluateHand(iteration, gameStep) {
             document.querySelector("[data-round='match']").classList.add("hide");
             document.querySelector("[data-round='raise']").classList.add("hide");
             document.querySelector("[data-round='check']").classList.add("hide");
+            
+            document.querySelector("[data-round='max']").disabled = true;
+            document.querySelector("[data-round='match']").disabled = true;
+            document.querySelector("[data-round='raise']").disabled = true;
+            document.querySelector("[data-round='check']").disabled = true;
+
+            document.querySelector("[data-round='max']").innerHTML = "Max $0";
+            document.querySelector("[data-round='match']").innerHTML = "Match $0";
+            document.querySelector("[data-round='raise']").innerHTML = "Match $0";
+            
             document.querySelector("button[title='Deal']").disabled = false;
             document.querySelector("button[title='Deal']").classList.remove("hide");
-            document.querySelector("[data-round='max']").disabled = false;
-            document.querySelector("[data-round='match']").disabled = false;
-            document.querySelector("[data-round='check']").disabled = false;
             stepPlayed = true;
             return false;
         }
@@ -869,8 +877,10 @@ function match(checked, betMultiplier) {
     }
     document.querySelector("[data-round='match']").disabled = true;
     document.querySelector("[data-round='check']").disabled = true;
+    document.querySelector("[data-round='raise']").disabled = true;
     document.querySelector("[data-round='match']").disabled = false;
     document.querySelector("[data-round='max']").disabled = false;
+    document.querySelector("[data-round='raise']").disabled = false;
     window.location = "#";
     gameIncrement = gameIncrement + 1;
     let gameStep = gameIncrement;
@@ -904,6 +914,7 @@ function match(checked, betMultiplier) {
             playerMoney = playerMoney - monetaryVal[gameStep];
             setPlayerMoney("betting");
             document.querySelector("[data-round='match']").innerHTML = "Match $" + monetaryVal[gameStep + 1];
+            document.querySelector("[data-round='raise']").innerHTML = "Raise $" + (monetaryVal[gameStep + 1] * 2);
             document.querySelector("[data-round='max']").innerHTML = "Max $" + (monetaryVal[gameStep + 1] * 3);
         }
         if (gameStep === 3) {
@@ -912,6 +923,7 @@ function match(checked, betMultiplier) {
             playerMoney = playerMoney - monetaryVal[gameStep];
             setPlayerMoney("betting");
             document.querySelector("[data-round='match']").innerHTML = "Match $" + monetaryVal[gameStep + 1];
+            document.querySelector("[data-round='raise']").innerHTML = "Raise $" + (monetaryVal[gameStep + 1] * 2);
             document.querySelector("[data-round='max']").innerHTML = "Max $" + (monetaryVal[gameStep + 1] * 3);
         }
         if (gameStep === 4) {
@@ -927,6 +939,7 @@ function match(checked, betMultiplier) {
         }
     } else {
         document.querySelector("[data-round='match']").innerHTML = "Match $" + monetaryVal[gameStep + 1];
+        document.querySelector("[data-round='raise']").innerHTML = "Raise $" + (monetaryVal[gameStep] * betMultiplier);
         document.querySelector("[data-round='max']").innerHTML = "Max $" + (monetaryVal[gameStep] * betMultiplier);
     }
     document.getElementById("playerMoney").innerHTML = playerMoney;
@@ -998,6 +1011,7 @@ function deal() {
     document.getElementById("betTarget").innerHTML = "Bet $" + monetaryVal[1];
     document.querySelector("#playerMoney").innerHTML = playerMoney;
     document.querySelector("[data-round='match']").innerHTML = "Match $" + monetaryVal[2];
+    document.querySelector("[data-round='raise']").innerHTML = "Raise $" + (monetaryVal[2] * 2);
     document.querySelector("[data-round='max']").innerHTML = "Max $" + monetaryVal[2] * 3;
     clear("deal");
     countingIterations = 0;
