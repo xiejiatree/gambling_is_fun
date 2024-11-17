@@ -14,5 +14,7 @@ Monte Carlo Simulation: [https://en.wikipedia.org/wiki/Monte_Carlo_method#Simple
 
 KQ48 Heuristic decreases \[house] edge: [https://wizardofodds.com/games/crazy-4-poker/]
 
+Statistics based on: [https://en.wikipedia.org/wiki/Texas_hold_%27em_starting_hands#Statistics_based_on_real_online_play]
+
 
 
